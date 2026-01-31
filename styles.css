@@ -23,7 +23,7 @@
     --color-text-tertiary: #71717a;
     
     /* Gradients */
-    --gradient-accent: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+    --gradient-accent: #5A1CC0;
     --gradient-dark: linear-gradient(180deg, #050505 0%, #0a0a0f 100%);
     --gradient-overlay: linear-gradient(180deg, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 0.9) 100%);
     
@@ -270,6 +270,167 @@ body {
     pointer-events: none;
 }
 
+/* Motion Elements - Geometric Shapes */
+.hero-motion-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+    opacity: 0;
+    animation: fade-in-motion 1s ease-out 1.2s forwards;
+}
+
+@keyframes fade-in-motion {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.motion-shape {
+    position: absolute;
+}
+
+/* Outline Squares */
+.shape-square {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: transparent;
+}
+
+.square-1 {
+    width: 20px;
+    height: 20px;
+    top: 15%;
+    left: 8%;
+    opacity: 0.7;
+    animation: rotate-slow 18s linear infinite;
+}
+
+.square-2 {
+    width: 14px;
+    height: 14px;
+    top: 25%;
+    right: 12%;
+    opacity: 0.55;
+    animation: rotate-slow 22s linear infinite reverse;
+}
+
+.square-3 {
+    width: 18px;
+    height: 18px;
+    bottom: 30%;
+    left: 15%;
+    opacity: 0.65;
+    animation: rotate-slow 15s linear infinite;
+}
+
+.square-4 {
+    width: 12px;
+    height: 12px;
+    bottom: 20%;
+    right: 8%;
+    opacity: 0.5;
+    animation: rotate-slow 20s linear infinite reverse;
+}
+
+/* Filled Triangles */
+.shape-triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+}
+
+.triangle-1 {
+    border-width: 0 10px 17px 10px;
+    border-color: transparent transparent rgba(255, 255, 255, 0.75) transparent;
+    top: 20%;
+    right: 20%;
+    animation: rotate-slow 14s linear infinite;
+}
+
+.triangle-2 {
+    border-width: 0 8px 14px 8px;
+    border-color: transparent transparent rgba(255, 255, 255, 0.6) transparent;
+    top: 60%;
+    left: 10%;
+    animation: rotate-slow 19s linear infinite reverse;
+}
+
+.triangle-3 {
+    border-width: 0 6px 10px 6px;
+    border-color: transparent transparent rgba(255, 255, 255, 0.55) transparent;
+    bottom: 25%;
+    right: 18%;
+    animation: rotate-slow 16s linear infinite;
+}
+
+.triangle-4 {
+    border-width: 0 12px 21px 12px;
+    border-color: transparent transparent rgba(255, 255, 255, 0.7) transparent;
+    top: 45%;
+    left: 5%;
+    animation: rotate-slow 21s linear infinite reverse;
+}
+
+/* Motion Lines */
+.hero-motion-elements .motion-line {
+    position: absolute;
+    height: 1px;
+}
+
+.hero-motion-elements .line-1 {
+    width: 60px;
+    top: 30%;
+    left: 20%;
+    background: rgba(255, 255, 255, 0.65);
+    animation: rotate-slow 24s linear infinite;
+}
+
+.hero-motion-elements .line-2 {
+    width: 40px;
+    top: 70%;
+    right: 25%;
+    background: rgba(255, 255, 255, 0.5);
+    animation: rotate-slow 28s linear infinite reverse;
+}
+
+.hero-motion-elements .line-3 {
+    width: 50px;
+    top: 50%;
+    left: 80%;
+    background: rgba(255, 255, 255, 0.6);
+    animation: rotate-slow 22s linear infinite;
+}
+
+.hero-motion-elements .line-4 {
+    width: 35px;
+    bottom: 35%;
+    left: 25%;
+    background: rgba(255, 255, 255, 0.45);
+    animation: rotate-slow 30s linear infinite reverse;
+}
+
+.hero-motion-elements .line-5 {
+    width: 45px;
+    top: 55%;
+    left: 12%;
+    background: rgba(255, 255, 255, 0.55);
+    animation: rotate-slow 26s linear infinite;
+}
+
+@keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Pulse animation for some elements */
+@keyframes pulse-gentle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+}
+
 .hero-content {
     position: relative;
     z-index: var(--z-default);
@@ -328,7 +489,7 @@ body {
 
 .headline-line-2 {
     font-size: clamp(4rem, 12vw, 10rem);
-    background: var(--gradient-accent);
+    background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 50%, #06b6d4 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -525,9 +686,13 @@ body {
 }
 
 .portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     gap: var(--spacing-md);
+}
+
+.portfolio-grid .portfolio-item {
+    flex: 1;
+    min-width: 0;
 }
 
 .portfolio-item {
@@ -565,27 +730,16 @@ body {
     background: linear-gradient(
         180deg,
         rgba(5, 5, 5, 0) 0%,
-        rgba(5, 5, 5, 0.6) 60%,
-        rgba(5, 5, 5, 0.95) 100%
+        rgba(5, 5, 5, 0.4) 60%,
+        rgba(5, 5, 5, 0.7) 100%
     );
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: var(--spacing-md);
-    opacity: 0;
-    transition: opacity var(--transition-medium);
-}
-
-.portfolio-item:hover .portfolio-overlay {
-    opacity: 1;
 }
 
 .project-meta {
-    transform: translateY(20px);
-    transition: transform var(--transition-medium);
-}
-
-.portfolio-item:hover .project-meta {
     transform: translateY(0);
 }
 
@@ -695,27 +849,16 @@ body {
     background: linear-gradient(
         180deg,
         rgba(5, 5, 5, 0) 0%,
-        rgba(5, 5, 5, 0.6) 60%,
-        rgba(5, 5, 5, 0.95) 100%
+        rgba(5, 5, 5, 0.4) 60%,
+        rgba(5, 5, 5, 0.7) 100%
     );
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     padding: var(--spacing-md);
-    opacity: 0;
-    transition: opacity var(--transition-medium);
-}
-
-.video-editing-item:hover .video-editing-overlay {
-    opacity: 1;
 }
 
 .video-editing-meta {
-    transform: translateY(20px);
-    transition: transform var(--transition-medium);
-}
-
-.video-editing-item:hover .video-editing-meta {
     transform: translateY(0);
 }
 
@@ -1611,7 +1754,7 @@ body {
     }
     
     .portfolio-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
     
     .video-editing-grid {
