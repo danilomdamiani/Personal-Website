@@ -5,3 +5,4 @@ TODO
 - remove webm video previews from mobile
 - adjust socials and calendly button
 - set up domain
+- rename website to include D.
