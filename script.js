@@ -114,6 +114,9 @@ function initHeroAnimations() {
     // Simplified hero entrance animation
     const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
     
+    // Set visibility visible before animating
+    gsap.set(['.headline-line', '.hero-subline', '.hero-cta-group', '.stat-item'], { visibility: 'visible' });
+    
     tl.from('.headline-line-1', { y: 30, opacity: 0, duration: 0.6 })
       .from('.headline-line-2', { y: 30, opacity: 0, duration: 0.6 }, '-=0.3')
       .from('.headline-line-3', { y: 30, opacity: 0, duration: 0.6 }, '-=0.3')

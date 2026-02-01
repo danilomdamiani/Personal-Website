@@ -6,19 +6,57 @@
     <title>Danilo | Premium Video Editing & Motion Design</title>
     <meta name="description" content="Specialized video editing and motion design for high-budget international brands. Stop the scroll. Drive action.">
     
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Danilo | Premium Video Editing & Motion Design">
+    <meta property="og:description" content="Specialized video editing and motion design for high-budget international brands. Stop the scroll. Drive action.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://danilodmotion.com/me.png">
+    <meta property="og:url" content="https://danilodmotion.com">
+    <meta name="twitter:card" content="summary_large_image">
+    
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
+    <link rel="preconnect" href="https://fast.wistia.net">
     
-    <!-- Preload critical fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"></noscript>
+    <!-- Load Google Fonts synchronously to prevent FOUC -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Preload critical CSS -->
     <link rel="preload" href="styles.css" as="style">
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font loading optimization - prevent FOUC -->
+    <style>
+        /* Start with fallback fonts while Outfit loads */
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        /* Once Outfit is loaded, apply it smoothly */
+        html.fonts-loaded {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        /* Smooth transition between fonts */
+        body {
+            transition: opacity 0.15s ease-out;
+        }
+        html:not(.fonts-loaded) body {
+            opacity: 0.95;
+        }
+    </style>
+    <script>
+        // Detect when Outfit font is loaded
+        if (document.fonts) {
+            document.fonts.load('1em Outfit').then(function() {
+                document.documentElement.classList.add('fonts-loaded');
+            });
+        } else {
+            // Fallback for browsers without Font Loading API
+            document.documentElement.classList.add('fonts-loaded');
+        }
+    </script>
     
     <!-- Defer non-critical JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
@@ -247,7 +285,7 @@
             <div class="process-visual">
                 <div class="process-portrait">
                     <div class="portrait-frame">
-                        <img src="me.png" alt="Danilo - Motion Designer" class="portrait-img">
+                        <img src="me.png" alt="Danilo - Motion Designer" class="portrait-img" loading="lazy" decoding="async">
                         <div class="portrait-glow"></div>
                     </div>
                     <div class="motion-elements">
@@ -324,7 +362,7 @@
                 
                 <div class="contact-alternative">
                     <p class="alternative-text">Prefer email?</p>
-                    <a href="mailto:hello@danilomotion.com" class="contact-email magnetic-link">hello@danilomotion.com</a>
+                    <a href="mailto:hey@danilodmotion.com" class="contact-email magnetic-link">hey@danilodmotion.com</a>
                     <div class="social-links">
                         <a href="#" class="social-link magnetic-link" aria-label="LinkedIn">
                             <i data-lucide="linkedin"></i>
