@@ -79,6 +79,32 @@ body {
     overflow-x: hidden;
 }
 
+/* Performance Optimizations */
+section {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+}
+
+.portfolio-video,
+.video-editing-video {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.portfolio-item,
+.video-editing-item {
+    contain: layout style paint;
+}
+
+.hero-motion-elements .motion-shape,
+.hero-motion-elements .motion-line {
+    will-change: transform;
+}
+
+.software-icon {
+    will-change: transform;
+}
+
 /* Selection */
 ::selection {
     background: var(--color-accent-primary);
@@ -222,12 +248,12 @@ body {
 
 .hero-section {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     min-height: 800px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    padding: 120px 0 var(--spacing-xl);
 }
 
 .hero-video-container {
@@ -436,7 +462,7 @@ body {
     z-index: var(--z-default);
     text-align: center;
     max-width: 1200px;
-    padding: 120px var(--spacing-md) 0;
+    padding: var(--spacing-md);
 }
 
 .hero-badge {

@@ -1,15 +1,6 @@
 /**
  * DANILO MOTION - Premium Video Editing Website
- * JavaScript Interactions & Animations
- * 
- * Features:
- * - Custom cursor with magnetic effects
- * - Smooth scrolling with parallax
- * - Kinetic typography
- * - GSAP ScrollTrigger animations
- * - Video modal system
- * - Calendar booking widget
- * - Portfolio hover interactions
+ * Optimized JavaScript for Performance
  */
 
 // ============================================
@@ -18,22 +9,56 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
-    initHeroAnimations();
-    initParallaxEffects();
+    initVideoLazyLoading();
     initPortfolioHover();
     initVideoEditingHover();
-    initServiceAnimations();
-    initProcessTimeline();
     initVideoModals();
-    initScrollReveal();
     initLucideIcons();
+    
+    // Initialize GSAP only if not preferring reduced motion
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        initHeroAnimations();
+        initParallaxEffects();
+        initScrollReveal();
+    }
 });
 
-// Initialize Lucide icons
-function initLucideIcons() {
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+// ============================================
+// VIDEO THUMBNAIL LOADING
+// ============================================
+
+function initVideoLazyLoading() {
+    const videos = document.querySelectorAll('.portfolio-video, .video-editing-video');
+    
+    // Load video metadata and show first frame as thumbnail
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const video = entry.target;
+            
+            if (entry.isIntersecting) {
+                // Load video to show first frame
+                if (video.readyState === 0) {
+                    video.load();
+                    // Seek to frame and pause to show thumbnail
+                    video.addEventListener('loadeddata', function onLoad() {
+                        video.currentTime = 0.1;
+                        video.removeEventListener('loadeddata', onLoad);
+                    }, { once: true });
+                }
+            } else {
+                // Pause and reset when out of viewport
+                if (!video.paused) {
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            }
+        });
+    }, {
+        rootMargin: '100px',
+        threshold: 0
+    });
+    
+    videos.forEach(video => videoObserver.observe(video));
 }
 
 // ============================================
@@ -42,19 +67,24 @@ function initLucideIcons() {
 
 function initNavigation() {
     const nav = document.querySelector('.main-nav');
-    let lastScroll = 0;
+    let ticking = false;
     
-    // Scroll behavior
+    // Optimized scroll handler with requestAnimationFrame
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-        
-        if (currentScroll > 100) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+                
+                ticking = false;
+            });
+            ticking = true;
         }
-        
-        lastScroll = currentScroll;
     }, { passive: true });
     
     // Smooth scroll for anchor links
@@ -73,167 +103,43 @@ function initNavigation() {
 }
 
 // ============================================
-// HERO ANIMATIONS
+// HERO ANIMATIONS (Lightweight)
 // ============================================
 
 function initHeroAnimations() {
-    // Register GSAP plugins
+    if (typeof gsap === 'undefined') return;
+    
     gsap.registerPlugin(ScrollTrigger);
     
-    // Hero entrance animation
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    // Simplified hero entrance animation
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
     
-    tl.from('.hero-badge', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.2
-    })
-    .from('.headline-line-1', {
-        y: 50,
-        opacity: 0,
-        duration: 1
-    }, '-=0.4')
-    .from('.headline-line-2', {
-        y: 80,
-        opacity: 0,
-        duration: 1.2
-    }, '-=0.8')
-    .from('.headline-line-3', {
-        y: 30,
-        opacity: 0,
-        duration: 0.8
-    }, '-=0.6')
-    .from('.hero-subline', {
-        y: 20,
-        opacity: 0,
-        duration: 0.8
-    }, '-=0.4')
-    .from('.hero-cta-group', {
-        y: 20,
-        opacity: 0,
-        duration: 0.8
-    }, '-=0.4')
-    .from('.stat-item', {
-        y: 20,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1
-    }, '-=0.4');
-    
-    // Scroll parallax for hero
-    gsap.to('.hero-headline', {
-        scrollTrigger: {
-            trigger: '.hero-section',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1
-        },
-        y: 100,
-        opacity: 0.3
-    });
-    
-    gsap.to('.hero-video', {
-        scrollTrigger: {
-            trigger: '.hero-section',
-            start: 'top top',
-            end: 'bottom top',
-            scrub: 1
-        },
-        scale: 1.1,
-        filter: 'blur(5px)'
-    });
-    
-    // Kinetic text effect for headline
-    const headlineLines = document.querySelectorAll('.headline-line');
-    headlineLines.forEach(line => {
-        line.addEventListener('mouseenter', () => {
-            gsap.to(line, {
-                scale: 1.02,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-        
-        line.addEventListener('mouseleave', () => {
-            gsap.to(line, {
-                scale: 1,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-    });
+    tl.from('.headline-line-1', { y: 30, opacity: 0, duration: 0.6 })
+      .from('.headline-line-2', { y: 30, opacity: 0, duration: 0.6 }, '-=0.3')
+      .from('.headline-line-3', { y: 30, opacity: 0, duration: 0.6 }, '-=0.3')
+      .from('.hero-subline', { y: 20, opacity: 0, duration: 0.5 }, '-=0.2')
+      .from('.hero-cta-group', { y: 20, opacity: 0, duration: 0.5 }, '-=0.2')
+      .from('.stat-item', { y: 20, opacity: 0, duration: 0.4, stagger: 0.1 }, '-=0.2');
 }
 
 // ============================================
-// PARALLAX EFFECTS
+// PARALLAX EFFECTS (Optimized)
 // ============================================
 
 function initParallaxEffects() {
-    // Portfolio items parallax
-    gsap.utils.toArray('.portfolio-item').forEach((item, i) => {
-        gsap.from(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: 'top 85%',
-                end: 'top 50%',
-                scrub: 1
-            },
-            y: 50,
-            opacity: 0.8
-        });
-    });
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     
-    // Video editing items parallax
-    gsap.utils.toArray('.video-editing-item').forEach((item, i) => {
-        gsap.from(item, {
-            scrollTrigger: {
-                trigger: item,
-                start: 'top 85%',
-                end: 'top 50%',
-                scrub: 1
-            },
-            y: 50,
-            opacity: 0.8
-        });
-    });
+    // Batch animations for better performance
+    const portfolioItems = gsap.utils.toArray('.portfolio-item');
+    const videoEditingItems = gsap.utils.toArray('.video-editing-item');
     
-    // Service cards stagger
-    gsap.from('.service-card', {
-        scrollTrigger: {
-            trigger: '.services-container',
-            start: 'top 80%'
-        },
-        y: 60,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out'
-    });
-    
-    // Process timeline
-    gsap.from('.timeline-item', {
-        scrollTrigger: {
-            trigger: '.process-timeline',
-            start: 'top 80%'
-        },
-        x: -30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.2,
-        ease: 'power3.out'
-    });
-    
-    // Portrait parallax
-    gsap.from('.portrait-frame', {
-        scrollTrigger: {
-            trigger: '.process-visual',
-            start: 'top 80%',
-            end: 'center center',
-            scrub: 1
-        },
-        scale: 0.9,
-        opacity: 0.8
+    // Use batch for better performance
+    ScrollTrigger.batch([...portfolioItems, ...videoEditingItems], {
+        onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 0.4, stagger: 0.1 }),
+        onLeaveBack: batch => gsap.to(batch, { opacity: 0.8, y: 20, duration: 0.4 }),
+        start: 'top 85%',
+        end: 'bottom 15%',
+        toggleActions: 'play none none reverse'
     });
 }
 
@@ -246,33 +152,23 @@ function initPortfolioHover() {
     
     portfolioItems.forEach(item => {
         const video = item.querySelector('.portfolio-video');
-        const youtubeUrl = item.dataset.youtube;
         
         item.addEventListener('mouseenter', () => {
             if (video) {
-                video.play();
-                gsap.to(video, {
-                    scale: 1.05,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                });
+                // Load and play on hover
+                video.play().catch(() => {});
             }
         });
         
         item.addEventListener('mouseleave', () => {
             if (video) {
-                // Keep video playing - only reset scale
-                gsap.to(video, {
-                    scale: 1,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                });
+                video.pause();
+                video.currentTime = 0;
             }
         });
         
-        // Open modal with Wistia video on click
+        // Open modal on click
         item.addEventListener('click', () => {
-            // All videos use the same Wistia ID for now
             openWistiaModal('4l08fspoxt');
         });
     });
@@ -290,86 +186,20 @@ function initVideoEditingHover() {
         
         item.addEventListener('mouseenter', () => {
             if (video) {
-                video.play();
-                gsap.to(video, {
-                    scale: 1.05,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                });
+                video.play().catch(() => {});
             }
         });
         
         item.addEventListener('mouseleave', () => {
             if (video) {
-                // Keep video playing - only reset scale
-                gsap.to(video, {
-                    scale: 1,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                });
+                video.pause();
+                video.currentTime = 0;
             }
         });
         
-        // Open modal with Wistia video on click
         item.addEventListener('click', () => {
-            // All videos use the same Wistia ID for now
             openWistiaModal('4l08fspoxt');
         });
-    });
-}
-
-// ============================================
-// SERVICE CARD ANIMATIONS
-// ============================================
-
-function initServiceAnimations() {
-    const serviceCards = document.querySelectorAll('.service-card');
-    
-    serviceCards.forEach(card => {
-        const shapes = card.querySelectorAll('.abstract-shape');
-        
-        card.addEventListener('mouseenter', () => {
-            gsap.to(shapes, {
-                scale: 1.2,
-                duration: 0.4,
-                stagger: 0.05,
-                ease: 'power2.out'
-            });
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            gsap.to(shapes, {
-                scale: 1,
-                duration: 0.4,
-                stagger: 0.05,
-                ease: 'power2.out'
-            });
-        });
-    });
-}
-
-// ============================================
-// PROCESS TIMELINE
-// ============================================
-
-function initProcessTimeline() {
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    
-    timelineItems.forEach((item, index) => {
-        const line = item.querySelector('.timeline-line');
-        
-        if (line && index < timelineItems.length - 1) {
-            gsap.from(line, {
-                scrollTrigger: {
-                    trigger: item,
-                    start: 'top 70%',
-                    end: 'bottom 70%',
-                    scrub: 1
-                },
-                scaleY: 0,
-                transformOrigin: 'top'
-            });
-        }
     });
 }
 
@@ -380,11 +210,12 @@ function initProcessTimeline() {
 function initVideoModals() {
     const videoModal = document.getElementById('videoModal');
     
+    if (!videoModal) return;
+    
     // Showreel button
     const showreelBtn = document.querySelector('.cta-showreel');
-    if (showreelBtn && videoModal) {
+    if (showreelBtn) {
         showreelBtn.addEventListener('click', () => {
-            // Showreel video - Wistia ID
             openWistiaModal('4l08fspoxt');
         });
     }
@@ -392,7 +223,7 @@ function initVideoModals() {
     // Close buttons
     document.querySelectorAll('.modal-close').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const modal = e.target.closest('.video-modal, .booking-modal');
+            const modal = e.target.closest('.video-modal');
             closeModal(modal);
         });
     });
@@ -407,301 +238,82 @@ function initVideoModals() {
     
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            if (videoModal && videoModal.classList.contains('active')) {
-                closeModal(videoModal);
-            }
+        if (e.key === 'Escape' && videoModal.classList.contains('active')) {
+            closeModal(videoModal);
         }
     });
 }
 
-// Open modal with Wistia video
 function openWistiaModal(mediaId) {
     const modal = document.getElementById('videoModal');
     const iframe = modal.querySelector('.modal-wistia');
     
     if (iframe) {
-        // Wistia embed URL format
         iframe.src = `https://fast.wistia.net/embed/iframe/${mediaId}`;
     }
     
-    openModal(modal);
-}
-
-function openModal(modal) {
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
-    
-    // Use fromTo to ensure proper animation on re-open
-    gsap.fromTo(modal.querySelector('.modal-content'), 
-        {
-            scale: 0.9,
-            opacity: 0
-        },
-        {
-            scale: 1,
-            opacity: 1,
-            duration: 0.4,
-            ease: 'power2.out'
-        }
-    );
 }
 
 function closeModal(modal) {
     if (!modal) return;
     
-    const video = modal.querySelector('video');
     const iframe = modal.querySelector('.modal-wistia');
     
-    if (video) {
-        video.pause();
-    }
-    
-    // Clear iframe src to stop Wistia video
     if (iframe) {
         iframe.src = '';
     }
     
-    gsap.to(modal.querySelector('.modal-content'), {
-        scale: 0.9,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.in',
-        onComplete: () => {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-            // Reset modal content for next open
-            gsap.set(modal.querySelector('.modal-content'), {
-                scale: 0.9,
-                opacity: 0
-            });
-        }
-    });
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 // ============================================
-// SCROLL REVEAL ANIMATIONS
+// SCROLL REVEAL ANIMATIONS (Optimized)
 // ============================================
 
 function initScrollReveal() {
-    // Reveal elements on scroll
-    const revealElements = document.querySelectorAll('.section-header, .process-intro');
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    
+    const revealElements = document.querySelectorAll('.section-header, .about-content');
     
     revealElements.forEach(el => {
         gsap.from(el, {
             scrollTrigger: {
                 trigger: el,
                 start: 'top 85%',
-                toggleActions: 'play none none reverse'
+                toggleActions: 'play none none reverse',
+                once: true // Only animate once for performance
             },
-            y: 30,
+            y: 20,
             opacity: 0,
-            duration: 0.8,
-            ease: 'power3.out'
+            duration: 0.5,
+            ease: 'power2.out'
         });
     });
-    
-    // Contact section animation
-    gsap.from('.contact-title', {
-        scrollTrigger: {
-            trigger: '.contact-section',
-            start: 'top 70%'
-        },
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.calendly-container', {
-        scrollTrigger: {
-            trigger: '.contact-content',
-            start: 'top 80%'
-        },
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.2,
-        ease: 'power3.out'
-    });
-    
-    gsap.from('.contact-alternative', {
-        scrollTrigger: {
-            trigger: '.contact-content',
-            start: 'top 80%'
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.4,
-        ease: 'power3.out'
-    });
 }
 
 // ============================================
-// TEXT SCRAMBLE EFFECT (KINETIC TYPOGRAPHY)
+// LUCIDE ICONS
 // ============================================
 
-class TextScramble {
-    constructor(el) {
-        this.el = el;
-        this.chars = '!<>-_\\/[]{}—=+*^?#________';
-        this.update = this.update.bind(this);
-    }
-    
-    setText(newText) {
-        const oldText = this.el.innerText;
-        const length = Math.max(oldText.length, newText.length);
-        const promise = new Promise(resolve => this.resolve = resolve);
-        
-        this.queue = [];
-        for (let i = 0; i < length; i++) {
-            const from = oldText[i] || '';
-            const to = newText[i] || '';
-            const start = Math.floor(Math.random() * 40);
-            const end = start + Math.floor(Math.random() * 40);
-            this.queue.push({ from, to, start, end });
-        }
-        
-        cancelAnimationFrame(this.frameRequest);
-        this.frame = 0;
-        this.update();
-        return promise;
-    }
-    
-    update() {
-        let output = '';
-        let complete = 0;
-        
-        for (let i = 0, n = this.queue.length; i < n; i++) {
-            let { from, to, start, end, char } = this.queue[i];
-            
-            if (this.frame >= end) {
-                complete++;
-                output += to;
-            } else if (this.frame >= start) {
-                if (!char || Math.random() < 0.28) {
-                    char = this.randomChar();
-                    this.queue[i].char = char;
-                }
-                output += `<span class="scramble-char">${char}</span>`;
-            } else {
-                output += from;
-            }
-        }
-        
-        this.el.innerHTML = output;
-        
-        if (complete === this.queue.length) {
-            this.resolve();
-        } else {
-            this.frameRequest = requestAnimationFrame(this.update);
-            this.frame++;
-        }
-    }
-    
-    randomChar() {
-        return this.chars[Math.floor(Math.random() * this.chars.length)];
+function initLucideIcons() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
     }
 }
 
-// Apply scramble effect to section titles
-function initTextScramble() {
-    const sectionTitles = document.querySelectorAll('.section-title');
-    
-    sectionTitles.forEach(title => {
-        const fx = new TextScramble(title);
-        const originalText = title.innerText;
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    fx.setText(originalText);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-        
-        observer.observe(title);
-    });
-}
-
 // ============================================
-// LOADING SCREEN
+// CLEANUP ON PAGE HIDE
 // ============================================
 
-function initLoader() {
-    const loader = document.createElement('div');
-    loader.className = 'page-loader';
-    loader.innerHTML = `
-        <div class="loader-content">
-            <div class="loader-text">DANILO</div>
-            <div class="loader-bar">
-                <div class="loader-progress"></div>
-            </div>
-        </div>
-    `;
-    
-    document.body.appendChild(loader);
-    
-    // Animate loader
-    gsap.to(loader.querySelector('.loader-progress'), {
-        width: '100%',
-        duration: 1.5,
-        ease: 'power2.inOut',
-        onComplete: () => {
-            gsap.to(loader, {
-                opacity: 0,
-                duration: 0.5,
-                onComplete: () => {
-                    loader.remove();
-                    initHeroAnimations();
-                }
-            });
+// Pause all videos when page is hidden
+document.addEventListener('visibilitychange', () => {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        if (document.hidden) {
+            video.pause();
         }
-    });
-}
-
-// ============================================
-// VIDEO AUTOPLAY SETUP
-// ============================================
-
-// Start all preview videos immediately
-document.querySelectorAll('.portfolio-video, .video-editing-video').forEach(video => {
-    video.load();
-    video.play().catch(e => {
-        // Autoplay might be blocked by browser policy, that's ok
-        console.log('Autoplay blocked for video:', e);
     });
 });
-
-// ============================================
-// PRELOAD HERO VIDEO
-// ============================================
-
-const heroVideo = document.querySelector('.hero-video');
-if (heroVideo) {
-    heroVideo.addEventListener('loadeddata', () => {
-        heroVideo.classList.add('loaded');
-    });
-}
-
-// Initialize additional effects after page load
-window.addEventListener('load', () => {
-    initTextScramble();
-});
-
-// ============================================
-// REDUCED MOTION SUPPORT
-// ============================================
-
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // Disable complex animations for users who prefer reduced motion
-    gsap.globalTimeline.pause();
-    
-    // Show all elements immediately
-    document.querySelectorAll('.reveal, .stagger-item').forEach(el => {
-        el.style.opacity = 1;
-        el.style.transform = 'none';
-    });
-}

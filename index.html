@@ -6,19 +6,24 @@
     <title>Danilo | Premium Video Editing & Motion Design</title>
     <meta name="description" content="Specialized video editing and motion design for high-budget international brands. Stop the scroll. Drive action.">
     
-    <!-- Outfit Variable Font -->
+    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
     
-    <!-- GSAP for advanced animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"></noscript>
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="styles.css" as="style">
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Defer non-critical JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -118,7 +123,7 @@
             <!-- Project 1 -->
             <div class="portfolio-item" data-project="1" data-youtube="https://www.youtube.com/watch?v=SvkM1ytF8vE">
                 <div class="portfolio-thumbnail">
-                    <video class="portfolio-video" loop muted playsinline autoplay loading="lazy">
+                    <video class="portfolio-video" loop muted playsinline preload="metadata">
                         <source src="preview/horizontal.webm" type="video/webm">
                     </video>
                     <div class="portfolio-overlay">
@@ -136,7 +141,7 @@
             <!-- Project 2 -->
             <div class="portfolio-item" data-project="2" data-youtube="https://www.youtube.com/watch?v=SvkM1ytF8vE">
                 <div class="portfolio-thumbnail">
-                    <video class="portfolio-video" loop muted playsinline autoplay loading="lazy">
+                    <video class="portfolio-video" loop muted playsinline preload="metadata">
                         <source src="preview/horizontal.webm" type="video/webm">
                     </video>
                     <div class="portfolio-overlay">
@@ -154,7 +159,7 @@
             <!-- Project 3 -->
             <div class="portfolio-item" data-project="3" data-youtube="https://www.youtube.com/watch?v=SvkM1ytF8vE">
                 <div class="portfolio-thumbnail">
-                    <video class="portfolio-video" loop muted playsinline autoplay loading="lazy">
+                    <video class="portfolio-video" loop muted playsinline preload="metadata">
                         <source src="preview/horizontal.webm" type="video/webm">
                     </video>
                     <div class="portfolio-overlay">
@@ -183,7 +188,7 @@
             <!-- Vertical Video 1 -->
             <div class="video-editing-item" data-project="v1" data-youtube="https://www.youtube.com/watch?v=SvkM1ytF8vE">
                 <div class="video-editing-thumbnail vertical">
-                    <video class="video-editing-video" loop muted playsinline autoplay loading="lazy">
+                    <video class="video-editing-video" loop muted playsinline preload="metadata">
                         <source src="preview/vertical.webm" type="video/webm">
                     </video>
                     <div class="video-editing-overlay">
@@ -201,7 +206,7 @@
             <!-- Vertical Video 2 -->
             <div class="video-editing-item" data-project="v2" data-youtube="https://www.youtube.com/watch?v=SvkM1ytF8vE">
                 <div class="video-editing-thumbnail vertical">
-                    <video class="video-editing-video" loop muted playsinline autoplay loading="lazy">
+                    <video class="video-editing-video" loop muted playsinline preload="metadata">
                         <source src="preview/vertical.webm" type="video/webm">
                     </video>
                     <div class="video-editing-overlay">
@@ -219,7 +224,7 @@
             <!-- Vertical Video 3 -->
             <div class="video-editing-item" data-project="v3" data-youtube="https://www.youtube.com/watch?v=SvkM1ytF8vE">
                 <div class="video-editing-thumbnail vertical">
-                    <video class="video-editing-video" loop muted playsinline autoplay loading="lazy">
+                    <video class="video-editing-video" loop muted playsinline preload="metadata">
                         <source src="preview/vertical.webm" type="video/webm">
                     </video>
                     <div class="video-editing-overlay">
@@ -280,7 +285,7 @@
                     <ul class="about-services">
                         <li><strong>Advanced Motion Design:</strong> SAAS explainer, logo animation and product demos made in After Effects.</li>
                         <li><strong>Strategic Video Editing:</strong> Pacing and storytelling that maximizes retention and drives sales, made in Premiere Pro.</li>
-                        <li><strong>Seamless integration:</strong> I deliver lightweight assets that match your brand guidelines perfectly and load instantly.</li>
+                        <li><strong>Seamless integration:</strong> I deliver lightweight assets that match your brand guidelines perfectly and load instantly, just like the elements on this page!</li>
                     </ul>
                     
                 </div>
