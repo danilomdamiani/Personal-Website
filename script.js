@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initPortfolioHover();
     initVideoEditingHover();
     initVideoModals();
+    initSnakeGame();
     initLucideIcons();
     
     // Initialize GSAP only if not preferring reduced motion
@@ -295,6 +296,88 @@ function initScrollReveal() {
             ease: 'power2.out'
         });
     });
+}
+
+// ============================================
+// SNAKE GAME MODAL
+// ============================================
+
+function initSnakeGame() {
+    const trigger = document.getElementById('snakeGameTrigger');
+    const modal = document.getElementById('snakeModal');
+    const closeBtn = document.getElementById('snakeModalClose');
+    const container = document.getElementById('snakeGameContainer');
+    
+    if (!trigger || !modal || !container) return;
+    
+    let gameLoaded = false;
+    
+    // Open modal on click
+    trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Load game only when first opened
+        if (!gameLoaded) {
+            loadSnakeGame(container);
+            gameLoaded = true;
+        }
+    });
+    
+    // Close button
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            closeSnakeModal(modal);
+        });
+    }
+    
+    // Close on backdrop click
+    const backdrop = modal.querySelector('.modal-backdrop');
+    if (backdrop) {
+        backdrop.addEventListener('click', () => {
+            closeSnakeModal(modal);
+        });
+    }
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeSnakeModal(modal);
+        }
+    });
+}
+
+function loadSnakeGame(container) {
+    // Create iframe to load the snake game
+    const iframe = document.createElement('iframe');
+    iframe.src = 'snake/index.html';
+    iframe.width = '400';
+    iframe.height = '320';
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('scrolling', 'no');
+    iframe.style.borderRadius = '8px';
+    iframe.setAttribute('tabindex', '0');
+    iframe.setAttribute('allow', 'fullscreen');
+    
+    // Clear container and add iframe
+    container.innerHTML = '';
+    container.appendChild(iframe);
+    
+    // Focus the iframe once it's loaded
+    iframe.addEventListener('load', () => {
+        iframe.focus();
+    });
+    
+    // Also focus after a longer delay as a fallback
+    setTimeout(() => {
+        iframe.focus();
+    }, 500);
+}
+
+function closeSnakeModal(modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
 }
 
 // ============================================

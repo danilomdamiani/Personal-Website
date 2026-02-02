@@ -1442,6 +1442,41 @@ section {
     height: 20px;
 }
 
+/* Snake Game Section */
+.snake-game-section {
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    margin-top: var(--spacing-lg);
+}
+
+.snake-game-text {
+    font-size: 1rem;
+    font-weight: var(--font-weight-regular);
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
+}
+
+.snake-game-link {
+    color: var(--color-accent-primary);
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    transition: color var(--transition-fast);
+    border-bottom: 1px solid var(--color-accent-primary);
+    padding-bottom: 2px;
+}
+
+.snake-game-link:hover {
+    color: var(--color-accent-secondary);
+    border-bottom-color: var(--color-accent-secondary);
+}
+
+/* Hide on mobile */
+@media (max-width: 768px) {
+    .snake-game-section {
+        display: none;
+    }
+}
+
 /* Minimal Footer */
 .minimal-footer {
     margin-top: auto;
@@ -1539,6 +1574,80 @@ section {
 .modal-wistia {
     width: 100%;
     height: 100%;
+}
+
+/* Snake Game Modal */
+.snake-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-medium);
+}
+
+.snake-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.snake-modal-content {
+    position: relative;
+    z-index: 1;
+    width: auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    background: var(--color-surface);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.snake-modal-content .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    z-index: 10;
+}
+
+.snake-modal-content .modal-close:hover {
+    background: var(--color-accent-primary);
+    border-color: var(--color-accent-primary);
+}
+
+.snake-game-container {
+    padding: 48px 32px 32px;
+    min-width: 400px;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.snake-game-container iframe {
+    border: none;
+    border-radius: 8px;
+    width: 400px;
+    height: 320px;
 }
 
 .form-group {
