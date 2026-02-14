@@ -714,7 +714,7 @@ section {
    ============================================ */
 
 .portfolio-section {
-    padding: var(--spacing-xxl) var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xxl);
     max-width: 1400px;
     margin: 0 auto;
 }
@@ -1309,7 +1309,7 @@ section {
 
 .contact-header {
     text-align: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-md);
 }
 
 .contact-title {
@@ -1327,42 +1327,19 @@ section {
 }
 
 .contact-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: var(--spacing-xl);
-    align-items: start;
-}
-
-/* Calendly Section */
-.calendly-section {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
     align-items: center;
-}
-
-.calendly-container {
-    background: var(--color-surface);
-    border-radius: 24px;
-    padding: var(--spacing-lg);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    gap: var(--spacing-md);
     text-align: center;
 }
 
-.calendly-text {
-    font-size: 1.1875rem;
-    font-weight: var(--font-weight-regular);
-    color: var(--color-text-secondary);
-    margin-bottom: var(--spacing-md);
-    line-height: 1.6;
-}
-
-.calendly-placeholder {
-    margin: var(--spacing-md) 0;
-    min-height: 60px;
+/* Contact CTA Center */
+.contact-cta-center {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: var(--spacing-xs);
 }
 
 .btn-calendly {
@@ -1379,15 +1356,16 @@ section {
     font-size: 0.9375rem;
     font-weight: var(--font-weight-regular);
     color: var(--color-text-tertiary);
-    margin-top: var(--spacing-md);
+    margin-top: 0;
 }
 
 /* Contact Alternative */
 .contact-alternative {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-md);
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
 }
 
 .alternative-text {
@@ -1704,9 +1682,6 @@ section {
         padding-left: 0;
     }
     
-    .calendly-section {
-        grid-template-columns: 1fr;
-    }
 }
 
 @media (max-width: 992px) {
@@ -1763,6 +1738,113 @@ section {
     
     .video-editing-grid {
         grid-template-columns: 1fr;
+    }
+    
+    /* Mobile hero motion elements - centered horizontally but spaced around hero text */
+    
+    /* Top area - above headline */
+    .square-1 {
+        width: 12px;
+        height: 12px;
+        top: 8%;
+        left: 20%;
+    }
+    
+    .square-2 {
+        width: 10px;
+        height: 10px;
+        top: 6%;
+        left: 75%;
+    }
+    
+    /* Upper middle area - beside headline */
+    .triangle-1 {
+        border-width: 0 8px 14px 8px;
+        top: 18%;
+        left: 8%;
+    }
+    
+    .square-2 {
+        width: 10px;
+        height: 10px;
+        top: 19%;
+        left: 60%;
+    }
+    
+    .triangle-2 {
+        border-width: 0 6px 10px 6px;
+        top: 20%;
+        right: 10%;
+        left: auto;
+    }
+    
+    /* Middle area - beside subline */
+    .square-3 {
+        width: 10px;
+        height: 10px;
+        top: 35%;
+        left: 12%;
+    }
+    
+    .square-4 {
+        width: 8px;
+        height: 8px;
+        top: 48%;
+        right: 15%;
+        left: auto;
+    }
+    
+    /* Lower area - beside buttons */
+    .triangle-3 {
+        border-width: 0 5px 9px 5px;
+        top: 62%;
+        left: 18%;
+    }
+    
+    .triangle-4 {
+        border-width: 0 7px 12px 7px;
+        top: 65%;
+        right: 12%;
+        left: auto;
+    }
+    
+    /* Lines scattered */
+    .hero-motion-elements .line-1 {
+        width: 30px;
+        top: 12%;
+        left: 85%;
+    }
+    
+    .hero-motion-elements .line-2 {
+        width: 25px;
+        top: 58%;
+        left: 18%;
+    }
+    
+    .hero-motion-elements .line-3 {
+        width: 20px;
+        top: 58%;
+        right: 8%;
+        left: auto;
+    }
+    
+    .hero-motion-elements .line-4 {
+        display: none;
+    }
+    
+    .hero-motion-elements .line-5 {
+        display: none;
+    }
+    
+    /* Simplified contact section for mobile */
+    .contact-cta-center {
+        text-align: center;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .contact-alternative {
+        align-items: center;
+        text-align: center;
     }
     
 }
