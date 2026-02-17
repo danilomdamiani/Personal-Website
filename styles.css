@@ -523,7 +523,7 @@ section {
 
 .headline-line-2 {
     font-size: clamp(4rem, 12vw, 10rem);
-    background: linear-gradient(90deg, #8b5cf6 0%, #a78bfa 50%, #06b6d4 100%);
+    background: linear-gradient(180deg, #b080ff 0%, #5A1CC0 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
