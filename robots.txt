@@ -1,5 +1,5 @@
 # Robots.txt for Danilo Damiani Portfolio
-# https://danilodmotion.netlify.app/
+# https://danilomd.com/
 
 User-agent: *
 Allow: /
@@ -25,4 +25,4 @@ User-agent: CCBot
 Allow: /
 
 # Sitemap Location
-Sitemap: https://danilodmotion.netlify.app/sitemap.xml
+Sitemap: https://danilomd.com/sitemap.xml
