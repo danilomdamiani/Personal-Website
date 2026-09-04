@@ -1,0 +1,37 @@
+# Danilo Damiani - Video Editor & Motion Designer
+
+> Portfolio & Work: https://danilodmotion.netlify.app/
+> Contact & Booking: https://calendly.com/danilodmotion/30min
+> Email: danilodmotion@zohomail.com
+> X (Twitter): @danilodmotion (https://x.com/danilodmotion)
+> Discord: @danilomd
+
+## Overview
+Danilo Damiani is a professional Video Editor and Motion Designer with over 5 years of experience specializing in high-impact visual storytelling, SaaS explainer videos, B2B product demos, high-retention YouTube long-form content, and vertical short-form reels.
+
+## Core Specializations & Services
+- **SaaS Motion Design & Explainer Videos**: Reconstructing user interfaces from scratch, animating UI flows, 2.5D/3D integration, vector transitions, kinetic typography, and sound design in Adobe After Effects.
+- **Strategic Video Editing**: Narrative pacing, retention-focused cuts, b-roll layering, audio mastering, and color grading in Adobe Premiere Pro.
+- **High-Retention YouTube Content**: Long-form edits optimized for viewer watch time, engagement, and click-through rates.
+- **Short-Form Vertical Videos**: High-converting Reels, TikToks, and Shorts for brands, finance, real estate, and digital products.
+
+## Featured Projects & Case Studies
+- **Shipper.now Promo Video**:
+  - *Context*: Motion design contest submission selected among the best on X (April 2026).
+  - *Creative Execution*: Built from scratch starting with storyboarding, animating custom UI elements and logos, integrating 3D models, and sound design in After Effects.
+  - *Category*: SaaS Motion Explainer.
+- **Howly.io Hero Video**:
+  - *Context*: Above-the-fold hero animation for on-demand expert consultation platform.
+  - *Creative Execution*: Recreated every single interface element from scratch and animated smoothly in After Effects to demonstrate the frictionless user flow.
+  - *Category*: Website Animation from Scratch.
+- **Real Estate Premium Vlog**: Cinematic light editing, visual polish, and luxury pacing.
+- **Premium Faceless Editing**: High-retention narrative structuring, graphics, and visual hooks.
+- **Documentary & Narrative Edit**: Story-driven documentary editing with dynamic archival and motion assets.
+
+## Technical Skills & Tooling
+- **Primary Software**: Adobe After Effects, Adobe Premiere Pro.
+- **Techniques**: UI/UX Animation, 2.5D Camera Tracking, Kinetic Typography, Sound FX Design, Color Correction, Dynamic Pacing, Lightweight Web Asset Delivery.
+
+## Booking & Inquiries
+- **Discovery Call**: Book a free 20-minute consultation at https://calendly.com/danilodmotion/30min
+- **Direct Inquiries**: danilodmotion@zohomail.com

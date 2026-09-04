@@ -9,6 +9,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
+    initImageLoading();
     initVideoLazyLoading();
     initPortfolioHover();
     initVideoEditingHover();
@@ -25,10 +26,34 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================
+// IMAGE SMOOTH FADE-IN LOADING
+// ============================================
+
+function initImageLoading() {
+    const images = document.querySelectorAll('.portfolio-poster, .video-editing-poster');
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add('is-loaded');
+        } else {
+            img.addEventListener('load', () => {
+                img.classList.add('is-loaded');
+            });
+            img.addEventListener('error', () => {
+                img.classList.add('is-loaded');
+            });
+        }
+    });
+}
+
+// ============================================
 // VIDEO THUMBNAIL LOADING
 // ============================================
 
 function initVideoLazyLoading() {
+    // Preserve desktop behavior exactly as is; skip background video downloads on mobile touchscreens
+    const isMobileDevice = window.matchMedia('(max-width: 768px)').matches || ('ontouchstart' in window && window.innerWidth < 992);
+    if (isMobileDevice) return;
+
     const videos = document.querySelectorAll('.portfolio-video, .video-editing-video');
 
     const videoObserver = new IntersectionObserver((entries) => {
@@ -36,7 +61,7 @@ function initVideoLazyLoading() {
             const video = entry.target;
 
             if (entry.isIntersecting) {
-                // Load video only when 50% visible
+                // Load video only when 50% visible (Desktop behavior preserved)
                 if (video.readyState === 0 && video.dataset.src) {
                     video.src = video.dataset.src;
                     video.load();
@@ -107,18 +132,44 @@ function initHeroAnimations() {
     
     gsap.registerPlugin(ScrollTrigger);
     
-    // Simplified hero entrance animation
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-    
     // Set visibility visible before animating
-    gsap.set(['.headline-line', '.hero-subline', '.hero-cta-group', '.stat-item'], { visibility: 'visible' });
+    gsap.set(['.headline-line', '.hero-subline', '.hero-cta-group'], { visibility: 'visible' });
     
-    tl.from('.headline-line-1', { y: 30, opacity: 0, duration: 0.6 })
-      .from('.headline-line-2', { y: 30, opacity: 0, duration: 0.6 }, '-=0.3')
-      .from('.headline-line-3', { y: 30, opacity: 0, duration: 0.6 }, '-=0.3')
-      .from('.hero-subline', { y: 20, opacity: 0, duration: 0.5 }, '-=0.2')
-      .from('.hero-cta-group', { y: 20, opacity: 0, duration: 0.5 }, '-=0.2')
-      .from('.stat-item', { y: 20, opacity: 0, duration: 0.4, stagger: 0.1 }, '-=0.2');
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    
+    // Staggered headline lines sliding into view with depth
+    tl.from('.headline-line-1', {
+        y: 35,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    })
+    .from('.headline-line-2', {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    }, '-=0.55')
+    .from('.headline-line-3', {
+        y: 35,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out'
+    }, '-=0.55')
+    
+    // Subline and CTAs glide in smoothly
+    .from('.hero-subline', {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power2.out'
+    }, '-=0.4')
+    .from('.hero-cta-group', {
+        y: 20,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power2.out'
+    }, '-=0.45');
 }
 
 // ============================================
@@ -129,11 +180,12 @@ function initParallaxEffects() {
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     
     // Batch animations for better performance
-    const portfolioItems = gsap.utils.toArray('.portfolio-item');
+    const caseStudyCards = gsap.utils.toArray('.case-study-card');
+    const portfolioItems = gsap.utils.toArray('.portfolio-grid .portfolio-item');
     const videoEditingItems = gsap.utils.toArray('.video-editing-item');
     
     // Use batch for better performance
-    ScrollTrigger.batch([...portfolioItems, ...videoEditingItems], {
+    ScrollTrigger.batch([...caseStudyCards, ...portfolioItems, ...videoEditingItems], {
         onEnter: batch => gsap.to(batch, { opacity: 1, y: 0, duration: 0.4, stagger: 0.1 }),
         onLeaveBack: batch => gsap.to(batch, { opacity: 0.8, y: 20, duration: 0.4 }),
         start: 'top 85%',
@@ -223,6 +275,17 @@ function initVideoModals() {
             openShowreelModal();
         });
     }
+
+    // Case study CTA buttons
+    document.querySelectorAll('.case-study-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wistiaId = btn.dataset.wistia;
+            if (wistiaId) {
+                openWistiaModal(wistiaId);
+            }
+        });
+    });
     
     // Close buttons
     document.querySelectorAll('.modal-close').forEach(btn => {
@@ -248,6 +311,33 @@ function initVideoModals() {
     });
 }
 
+// On-demand dynamic Wistia loader
+let wistiaScriptLoading = false;
+const wistiaCallbacks = [];
+
+function ensureWistiaLoaded(callback) {
+    if (window._wq && window.Wistia) {
+        callback();
+        return;
+    }
+
+    wistiaCallbacks.push(callback);
+
+    if (!wistiaScriptLoading) {
+        wistiaScriptLoading = true;
+        const script = document.createElement('script');
+        script.src = 'https://fast.wistia.net/assets/external/E-v1.js';
+        script.async = true;
+        script.onload = () => {
+            while (wistiaCallbacks.length) {
+                const cb = wistiaCallbacks.shift();
+                try { cb(); } catch (err) { console.error(err); }
+            }
+        };
+        document.head.appendChild(script);
+    }
+}
+
 function openWistiaModal(mediaId, isVertical = false) {
     const modal = document.getElementById('videoModal');
     const container = document.getElementById('wistiaContainer');
@@ -269,9 +359,12 @@ function openWistiaModal(mediaId, isVertical = false) {
     `;
     
     container.innerHTML = wistiaHTML;
-    
-    // Initialize Wistia player
-    if (window._wq) {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Dynamically load Wistia SDK and initialize player
+    ensureWistiaLoaded(() => {
+        window._wq = window._wq || [];
         window._wq.push({
             id: mediaId,
             options: {
@@ -281,10 +374,7 @@ function openWistiaModal(mediaId, isVertical = false) {
                 controlsVisibleOnLoad: true
             }
         });
-    }
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    });
 }
 
 function closeModal(modal) {
