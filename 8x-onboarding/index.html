@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8x Internal Onboarding | Welcome to the Team</title>
+  <meta name="description" content="Internal onboarding guide and welcome hub for 8x team members." />
+  <link rel="icon" type="image/svg+xml" href="8x_icon.svg" />
+  
+  <!-- Google Fonts: Syne, Figtree, Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            figtree: ['Figtree', 'sans-serif'],
+            space: ['"Space Grotesk"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#0021cc',
+              hover: '#001baa',
+              dark: '#001699',
+              deep: '#000f6b',
+              tint: '#f5f6ff',
+            },
+            obsidian: {
+              DEFAULT: '#0e121b',
+              surface: '#111520',
+              dark: '#050608',
+            },
+            canvas: {
+              warm: '#f5f4f1',
+              cream: '#fafaf8',
+            },
+            neutral: {
+              sub: '#525866',
+              label: '#7c7c7c',
+              border: '#e1e4ea',
+              lightBorder: '#e6e6e6',
+            },
+            accent: {
+              green: '#1fc16b',
+              amber: '#ffecc0',
+            }
+          },
+          boxShadow: {
+            '8x': '0 20px 48px rgba(14, 18, 27, 0.08)',
+            'nav': '0 4px 24px rgba(0, 0, 0, 0.04)',
+            'glow': '0 0 50px rgba(0, 33, 204, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #0e121b;
+      background-color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Typography tuned to match user reference image */
+    h1, h2, h3, .font-syne {
+      font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
+      letter-spacing: -0.012em;
+    }
+
+    /* Ambient gradient backdrop mimicking 8x hero */
+    .hero-orbit-bg {
+      background: radial-gradient(circle at 50% 0%, rgba(245, 244, 241, 0.95) 0%, rgba(255, 255, 255, 0) 70%);
+    }
+
+    /* Video chassis styling */
+    .video-chassis {
+      box-shadow: 0 25px 60px -15px rgba(14, 18, 27, 0.25), 0 0 0 1px rgba(14, 18, 27, 0.08);
+    }
+
+    /* Section 2 Topic Icons: Smooth, Natural Reveal Without FOUC */
+    .topic-icon {
+      transform: scale(0.9);
+      opacity: 0.85;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.3s ease;
+      will-change: transform, opacity;
+    }
+    .blur-fade-in.is-visible .topic-icon {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .topic-icon:hover {
+      transform: scale(1.08) !important;
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.25));
+    }
+
+    /* Isometric 3D Supply Animation */
+    @keyframes isoFloatFront {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes isoFloatMid {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes isoFloatBack {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes isoSupplyPulse {
+      0% { stroke-dashoffset: 28; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .animate-iso-front { animation: isoFloatFront 4.5s ease-in-out infinite; will-change: transform; }
+    .animate-iso-mid { animation: isoFloatMid 4.5s ease-in-out infinite 0.75s; will-change: transform; }
+    .animate-iso-back { animation: isoFloatBack 4.5s ease-in-out infinite 1.5s; will-change: transform; }
+    .animate-iso-track { animation: isoSupplyPulse 1.8s linear infinite; }
+
+    /* Scroll Blur Fade-In Effect */
+    .blur-fade-in {
+      opacity: 0;
+      filter: blur(14px);
+      transform: translateY(28px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, filter, transform;
+    }
+
+    .blur-fade-in.is-visible {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateY(0);
+    }
+
+    /* Stagger delays for grid items */
+    .stagger-1 { transition-delay: 80ms; }
+    .stagger-2 { transition-delay: 160ms; }
+    .stagger-3 { transition-delay: 240ms; }
+    .stagger-4 { transition-delay: 320ms; }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .blur-fade-in {
+        opacity: 1 !important;
+        filter: none !important;
+        transform: none !important;
+        transition: none !important;
+      }
+      .topic-icon {
+        transform: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+      }
+      .animate-iso-front,
+      .animate-iso-mid,
+      .animate-iso-back,
+      .animate-iso-track {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #fafaf8;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cacfd8;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7c7c7c;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-white overflow-x-hidden selection:bg-brand selection:text-white">
+
+  <!-- Floating Pill Navbar (Top banner removed as requested) -->
+  <header class="fixed left-1/2 z-50 h-[68px] w-[calc(100%-24px)] max-w-[1091px] -translate-x-1/2 overflow-hidden rounded-[40px] bg-white/85 backdrop-blur-[12px] border border-neutral-border shadow-nav transition-all duration-300 md:w-[calc(100%-48px)] top-6">
+    <div class="relative flex h-full items-center justify-between px-5 md:px-8">
+      
+      <!-- Brand Logo -->
+      <a href="#hero" class="flex items-center gap-2.5 group">
+        <img src="8x_logo.svg" alt="8x" class="h-6 w-auto transition-transform group-hover:scale-105" />
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-8 text-[14px] font-medium text-neutral-sub">
+        <a href="#what-is-8x" class="transition-colors hover:text-obsidian">What is 8x?</a>
+        <a href="#expectations" class="transition-colors hover:text-obsidian">What We Expect</a>
+        <a href="#remote-culture" class="transition-colors hover:text-obsidian">Remote Culture</a>
+      </nav>
+
+      <!-- Right CTA -->
+      <div class="flex items-center gap-2.5">
+        <a href="#slack-section" class="flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-full bg-brand py-2 pl-4 pr-3 text-[14px] font-medium text-white transition-all hover:bg-brand-hover shadow-sm active:scale-95">
+          <span>Links</span>
+          <span class="flex size-4.5 items-center justify-center rounded-full bg-white text-brand p-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="size-3"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow pt-24">
+
+    <!-- HERO SECTION WITH BIG PLACEHOLDER VIDEO -->
+    <section id="hero" class="relative isolate w-full overflow-hidden px-5 pt-16 pb-12 sm:px-8 md:pt-20 md:pb-20 xl:px-32 hero-orbit-bg">
+      
+      <!-- Ambient Decorative Rings -->
+      <div class="pointer-events-none absolute left-1/2 -top-24 z-0 size-[800px] -translate-x-1/2 opacity-30 md:size-[1100px]">
+        <div class="size-full rounded-full border border-neutral-border/80"></div>
+        <div class="absolute inset-16 rounded-full border border-neutral-border/50 border-dashed"></div>
+        <div class="absolute inset-32 rounded-full border border-neutral-border/30"></div>
+      </div>
+
+      <div class="relative z-10 mx-auto flex w-full max-w-[920px] flex-col items-center gap-5 text-center blur-fade-in">
+        
+        <!-- Hero Headline in Syne font with larger Welcome to 8x and break after orchestration -->
+        <h1 class="font-syne text-[38px] sm:text-[56px] md:text-[68px] lg:text-[76px] font-semibold leading-[1.12] text-obsidian tracking-[-0.02em]">
+          <span class="block text-[44px] sm:text-[64px] md:text-[78px] lg:text-[88px] tracking-[-0.025em] pb-1">Welcome to 8x.</span>
+          <span class="text-brand">Human orchestration</span><br />
+          at scale.
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="max-w-[620px] text-[16px] font-normal leading-relaxed text-neutral-sub sm:text-[18px]">
+          You are joining the engine behind hundreds of thousands of creators and billions of organic impressions. Here is everything you need to know to hit the ground running.
+        </p>
+      </div>
+
+      <!-- BIG HERO PLACEHOLDER VIDEO -->
+      <div class="relative z-10 mx-auto mt-10 w-full max-w-[1040px] md:mt-14 blur-fade-in stagger-1">
+        
+        <div class="video-chassis relative overflow-hidden rounded-[24px] sm:rounded-[32px] border border-neutral-border bg-obsidian text-white">
+          
+          <!-- Video Header Bar -->
+          <div class="flex items-center justify-between border-b border-white/10 bg-obsidian-surface/90 px-4 py-3 sm:px-6">
+            <div class="flex items-center gap-2.5">
+              <span class="flex size-3 rounded-full bg-[#ff5f56]"></span>
+              <span class="flex size-3 rounded-full bg-[#ffbd2e]"></span>
+              <span class="flex size-3 rounded-full bg-[#27c93f]"></span>
+              <span class="ml-2 text-[12px] font-medium tracking-wide text-white/60">
+                8x_orientation_film_v1.mp4
+              </span>
+            </div>
+          </div>
+
+          <!-- Video Player Container with Vimeo Embed -->
+          <div id="heroVideoContainer" class="relative aspect-video w-full overflow-hidden bg-black" style="aspect-ratio: 16 / 9;">
+            <iframe 
+              id="heroVimeoIframe"
+              src="https://player.vimeo.com/video/1225272370?title=0&byline=0&portrait=0&badge=0&autopause=0&color=1a56db" 
+              class="absolute inset-0 size-full border-0" 
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+              allowfullscreen 
+              title="Welcome to 8x!">
+            </iframe>
+          </div>
+
+        </div>
+
+        <!-- Scroll down prompter -->
+        <div class="mt-8 flex flex-col items-center justify-center gap-2 text-center text-neutral-label">
+          <span class="text-[12px] font-semibold uppercase tracking-[1.2px]">Onboarding Roadmap</span>
+          <a href="#what-is-8x" class="flex size-8 items-center justify-center rounded-full border border-neutral-border bg-white text-obsidian shadow-sm transition-transform hover:translate-y-1">
+            <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- ========================================================================= -->
+    <!-- SECTION 1: WHAT IS 8X? (THE HUMAN ORCHESTRATION ENGINE - INTERACTIVE) -->
+    <!-- ========================================================================= -->
+    <section id="what-is-8x" class="relative isolate w-full px-5 py-20 sm:px-8 lg:px-12 xl:px-32 bg-white border-t border-neutral-border">
+      <div class="mx-auto w-full max-w-[1240px]">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col items-center text-center gap-3 mx-auto max-w-[780px] pb-10 sm:pb-14 blur-fade-in">
+          <p class="text-[13px] font-semibold uppercase tracking-[1.4px] text-brand">
+            01 • The 8x Operating Thesis
+          </p>
+          <h2 class="font-syne text-[32px] sm:text-[44px] md:text-[48px] font-semibold leading-[1.18] text-obsidian tracking-[-0.012em]">
+            What is 8x?
+          </h2>
+          <p class="text-[16px] sm:text-[18px] leading-relaxed text-neutral-sub max-w-[720px]">
+            8x is a <strong>human orchestration company</strong>. Whenever there is a human in the loop, we supply, evaluate, and pay out this human across marketing, sales, and engineering.
+          </p>
+        </div>
+
+        <!-- ISOMETRIC HUMAN SUPPLY STAGE -->
+        <div class="rounded-[32px] border border-neutral-border bg-[#0e121b] text-white p-7 sm:p-10 lg:p-12 shadow-2xl relative overflow-hidden mb-6 blur-fade-in">
+          
+          <!-- Subtle ambient background glow -->
+          <div class="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-brand/25 blur-3xl"></div>
+          <div class="pointer-events-none absolute -left-24 -bottom-24 size-96 rounded-full bg-emerald-500/10 blur-3xl"></div>
+
+          <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
+            
+            <!-- Left Column: The Supply Thesis & Telemetry -->
+            <div class="w-full lg:max-w-[490px] space-y-6">
+
+              <!-- Main Heading -->
+              <h3 class="font-syne text-[32px] sm:text-[44px] font-semibold tracking-[-0.012em] text-white leading-[1.12]">
+                Supplying verified humans at machine speed.
+              </h3>
+
+              <!-- Narrative -->
+              <p class="text-[15px] sm:text-[16px] leading-relaxed text-neutral-300">
+                Whenever an 8x vertical demands authentic human voice, creativity, or critical taste, our engine taps into an active stream across 50+ countries. We supply people into scalable pipelines evaluated on pure performance.
+              </p>
+
+              <!-- Big 250k+ Stat with Creator Avatars -->
+              <div class="pt-2">
+                <div class="flex items-center gap-4">
+                  <div class="font-syne text-[54px] sm:text-[68px] font-semibold leading-none tracking-[-0.02em] text-white">
+                    250k+
+                  </div>
+                  <!-- Avatar Stack of Stylized Badges -->
+                  <div class="flex -space-x-2 overflow-hidden">
+                    <div class="flex size-9 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 ring-2 ring-[#0e121b] text-[10.5px] font-bold text-white shadow-sm">
+                      SF
+                    </div>
+                    <div class="flex size-9 items-center justify-center rounded-full bg-gradient-to-tr from-emerald-600 to-teal-500 ring-2 ring-[#0e121b] text-[10.5px] font-bold text-white shadow-sm">
+                      LDN
+                    </div>
+                    <div class="flex size-9 items-center justify-center rounded-full bg-gradient-to-tr from-purple-600 to-pink-500 ring-2 ring-[#0e121b] text-[10.5px] font-bold text-white shadow-sm">
+                      NYC
+                    </div>
+                    <div class="flex size-9 items-center justify-center rounded-full bg-neutral-800 ring-2 ring-[#0e121b] text-[9.5px] font-bold text-white/90">
+                      +250k
+                    </div>
+                  </div>
+                </div>
+                <p class="mt-2 text-[14px] sm:text-[15px] text-neutral-400">
+                  creators in the 8x network
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Right Column: 3D Isometric Supply Animation Stage -->
+            <div class="relative w-full lg:w-[560px] h-[360px] sm:h-[420px] flex items-center justify-center shrink-0">
+              
+              <!-- Isometric Track & Grid Plane SVG -->
+              <svg class="absolute inset-0 size-full pointer-events-none" viewBox="0 0 560 420" fill="none" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <!-- Glowing linear gradient along the isometric pipeline axis -->
+                  <linearGradient id="isoSupplyGrad" x1="410" y1="110" x2="160" y2="330" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.15" />
+                    <stop offset="50%" stop-color="#1a56db" stop-opacity="0.8" />
+                    <stop offset="100%" stop-color="#10b981" stop-opacity="0.9" />
+                  </linearGradient>
+                  <!-- Ambient radial glow under front pedestal -->
+                  <radialGradient id="pedestalGlowFront" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#1a56db" stop-opacity="0.5" />
+                    <stop offset="100%" stop-color="#1a56db" stop-opacity="0" />
+                  </radialGradient>
+                  <!-- Ambient radial glow under mid pedestal -->
+                  <radialGradient id="pedestalGlowMid" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.3" />
+                    <stop offset="100%" stop-color="#3b82f6" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+
+                <!-- Ambient Pedestal Glows -->
+                <ellipse cx="160" cy="330" rx="90" ry="38" fill="url(#pedestalGlowFront)" />
+                <ellipse cx="285" cy="220" rx="75" ry="32" fill="url(#pedestalGlowMid)" />
+
+                <!-- Pedestal 3 (Back: Supply Intake) -->
+                <ellipse cx="410" cy="110" rx="58" ry="24" fill="rgba(255, 255, 255, 0.03)" stroke="rgba(255, 255, 255, 0.15)" stroke-width="1.5" stroke-dasharray="4 4" />
+
+                <!-- Pedestal 2 (Middle: Pipeline Matching) -->
+                <ellipse cx="285" cy="220" rx="72" ry="30" fill="rgba(26, 86, 219, 0.1)" stroke="rgba(59, 130, 246, 0.45)" stroke-width="1.5" />
+
+                <!-- Pedestal 1 (Front: Active Deployed) -->
+                <ellipse cx="160" cy="330" rx="88" ry="36" fill="rgba(26, 86, 219, 0.22)" stroke="#1a56db" stroke-width="2" />
+                <ellipse cx="160" cy="330" rx="65" ry="26" fill="none" stroke="rgba(16, 185, 129, 0.5)" stroke-width="1.5" stroke-dasharray="3 3" />
+
+                <!-- Connecting Isometric Conveyor Line -->
+                <line x1="410" y1="110" x2="160" y2="330" stroke="url(#isoSupplyGrad)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="8 6" class="animate-iso-track" />
+              </svg>
+
+              <!-- THE 3 ISOMETRIC PERSON AVATARS BEHIND EACH OTHER -->
+
+              <!-- 1. PERSON 3 (FURTHEST BACK: TALENT INTAKE POOL) -->
+              <div class="absolute left-[73%] top-[26%] -translate-x-1/2 -translate-y-[75%] z-10">
+                <div class="animate-iso-back relative flex flex-col items-center group cursor-default">
+                  <img src="person.png" alt="8x Person in Supply Pool" class="w-28 sm:w-34 h-auto drop-shadow-[0_12px_18px_rgba(26,86,219,0.2)] opacity-70 transition-all duration-300 group-hover:opacity-90 group-hover:scale-105" />
+                </div>
+              </div>
+
+              <!-- 2. PERSON 2 (MIDDLE: PIPELINE ORCHESTRATION & EVALUATION) -->
+              <div class="absolute left-[51%] top-[52%] -translate-x-1/2 -translate-y-[75%] z-20">
+                <div class="animate-iso-mid relative flex flex-col items-center group cursor-default">
+                  <img src="person.png" alt="8x Person in Pipeline" class="w-36 sm:w-42 h-auto drop-shadow-[0_18px_25px_rgba(26,86,219,0.35)] opacity-90 transition-all duration-300 group-hover:opacity-100 group-hover:scale-105" />
+                </div>
+              </div>
+
+              <!-- 3. PERSON 1 (FRONT: ACTIVELY DEPLOYED & GENERATING VIEWS) -->
+              <div class="absolute left-[29%] top-[79%] -translate-x-1/2 -translate-y-[75%] z-30">
+                <div class="animate-iso-front relative flex flex-col items-center group cursor-default">
+                  <img src="person.png" alt="8x Person Deployed" class="w-44 sm:w-50 h-auto drop-shadow-[0_24px_35px_rgba(26,86,219,0.55)] opacity-100 transition-all duration-300 group-hover:scale-105" />
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- 2-COLUMNS BENTO: FOUNDERS VISION + EXPANDED COMPOUNDING ARCHITECTURE -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- Card 1: The Founders' Grand Vision (Dark Obsidian - 1 Column) -->
+          <div class="flex flex-col justify-between rounded-[28px] bg-obsidian p-7 sm:p-8 text-white shadow-md border border-neutral-800 blur-fade-in stagger-1">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-blue-200">
+                  Founders' Vision
+                </span>
+              </div>
+              <blockquote class="font-syne mt-5 text-[20px] sm:text-[22px] font-semibold leading-snug text-white tracking-[-0.012em]">
+                "In a future where AI can do a lot, what does everyone else do? They work for 8x."
+              </blockquote>
+              <p class="mt-3 text-[14px] leading-relaxed text-neutral-300">
+                Our vision is that billions of people will be under management on 8x platforms. We are the company that brings humanity to that future.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 2: Reusable Architecture & Vertical Compounding (Electric Blue - 2 Columns, twice as big) -->
+          <div class="flex flex-col justify-between rounded-[28px] bg-brand p-7 sm:p-8 text-white shadow-8x blur-fade-in stagger-2 md:col-span-2">
+            <div>
+              <div class="flex items-center justify-between">
+                <span class="rounded-full bg-white/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
+                  Compounding Scale
+                </span>
+              </div>
+
+              <h4 class="font-syne mt-5 text-[22px] sm:text-[26px] font-semibold text-white tracking-[-0.012em] leading-snug max-w-[580px]">
+                One Shared Architecture Across Every Vertical
+              </h4>
+              <p class="mt-3 text-[14.5px] sm:text-[15.5px] leading-relaxed text-blue-100 max-w-[620px]">
+                Every new vertical we start leverages the exact same engine and experience from prior verticals. As we ship faster, every new product gets better and better.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- ========================================================================= -->
+    <!-- SECTION 2: WHAT WE WILL EXPECT FROM YOU -->
+    <!-- (Clean Normal Vertical Text Layout on Full Blue Background - Tightened Margins & Spacing) -->
+    <!-- ========================================================================= -->
+    <section id="expectations" class="relative isolate w-full px-5 py-14 sm:px-8 sm:py-16 lg:px-16 xl:px-36 bg-brand text-white">
+      <div class="mx-auto w-full max-w-[960px]">
+        
+        <!-- Section Header (Tightened padding and tuned typography) -->
+        <div class="flex flex-col items-start gap-2.5 pb-7 sm:pb-8 border-b border-white/20 blur-fade-in">
+          <p class="text-[12px] font-semibold uppercase tracking-[1.6px] text-blue-200">
+            02 • Mindset &amp; High Expectations
+          </p>
+          <h2 class="font-syne text-[28px] sm:text-[36px] font-semibold leading-tight text-white tracking-[-0.012em]">
+            What we will expect from you.
+          </h2>
+          <p class="max-w-[720px] text-[15px] sm:text-[16.5px] font-normal leading-relaxed text-blue-100">
+            We don't over-index on experience. We find people with potential and give them unreasonable tasks: sometimes they make it happen.
+          </p>
+        </div>
+
+        <!-- Vertical Minimalist Layout with Alternating Frameless Icons & Compact Margins -->
+        <div class="divide-y divide-white/15">
+          
+          <!-- TOPIC 1: Icon on LEFT, Text aligned LEFT -->
+          <div class="py-6 sm:py-7 flex flex-col md:flex-row items-start md:items-center gap-5 sm:gap-7 md:gap-9 text-left blur-fade-in">
+            <!-- Frameless Icon (LEFT) -->
+            <div class="topic-icon shrink-0 flex items-center justify-center text-[60px] sm:text-[74px] md:text-[82px] leading-none select-none cursor-default">
+              <span>🎯</span>
+            </div>
+            <!-- Topic Content -->
+            <div class="max-w-[760px]">
+              <h3 class="font-syne text-[19px] sm:text-[21px] font-semibold text-white tracking-[-0.012em] leading-snug">
+                Potential over experience and unreasonable tasks
+              </h3>
+              <p class="mt-1.5 text-[14px] sm:text-[14.5px] leading-relaxed text-blue-100/90">
+                We don't over-index on experience. We find people with potential and give them unreasonable tasks and ambitious projects. We ask the world of you, and sometimes you make it happen. When you do, we double down and invest more and more in you.
+              </p>
+            </div>
+          </div>
+
+          <!-- TOPIC 2: Icon on RIGHT, Text aligned RIGHT -->
+          <div class="py-6 sm:py-7 flex flex-col md:flex-row-reverse items-start md:items-center justify-between gap-5 sm:gap-7 md:gap-9 text-left md:text-right blur-fade-in">
+            <!-- Frameless Icon (RIGHT) -->
+            <div class="topic-icon shrink-0 flex items-center justify-center text-[60px] sm:text-[74px] md:text-[82px] leading-none select-none cursor-default">
+              <span>🔥</span>
+            </div>
+            <!-- Topic Content -->
+            <div class="max-w-[760px] md:ml-auto">
+              <h3 class="font-syne text-[19px] sm:text-[21px] font-semibold text-white tracking-[-0.012em] leading-snug">
+                Put your best foot forward and give 200%
+              </h3>
+              <p class="mt-1.5 text-[14px] sm:text-[14.5px] leading-relaxed text-blue-100/90">
+                You will be working with exceptionally smart people who will have high expectations of you. Put your best foot forward, be ambitious, and never underestimate yourself. If you invest in us, we will invest in you back: this is truly one of the biggest opportunities of your career.
+              </p>
+            </div>
+          </div>
+
+          <!-- TOPIC 3: Icon on LEFT, Text aligned LEFT -->
+          <div class="py-6 sm:py-7 flex flex-col md:flex-row items-start md:items-center gap-5 sm:gap-7 md:gap-9 text-left blur-fade-in">
+            <!-- Frameless Icon (LEFT) -->
+            <div class="topic-icon shrink-0 flex items-center justify-center text-[60px] sm:text-[74px] md:text-[82px] leading-none select-none cursor-default">
+              <span>✨</span>
+            </div>
+            <!-- Topic Content -->
+            <div class="max-w-[760px]">
+              <h3 class="font-syne text-[19px] sm:text-[21px] font-semibold text-white tracking-[-0.012em] leading-snug">
+                Be AI native with the taste to distinguish slop
+              </h3>
+              <p class="mt-1.5 text-[14px] sm:text-[14.5px] leading-relaxed text-blue-100/90">
+                You will be forced to be AI native to move at extreme speed and meet ambitious deadlines. Use AI to penetrate barriers on things you could not do before, whether asking Claude or digesting complex topics. But you are 100% accountable for your output: never ship AI slop.
+              </p>
+            </div>
+          </div>
+
+          <!-- TOPIC 4: Icon on RIGHT, Text aligned RIGHT -->
+          <div class="py-6 sm:py-7 flex flex-col md:flex-row-reverse items-start md:items-center justify-between gap-5 sm:gap-7 md:gap-9 text-left md:text-right blur-fade-in">
+            <!-- Frameless Icon (RIGHT) -->
+            <div class="topic-icon shrink-0 flex items-center justify-center text-[60px] sm:text-[74px] md:text-[82px] leading-none select-none cursor-default">
+              <span>🧭</span>
+            </div>
+            <!-- Topic Content -->
+            <div class="max-w-[760px] md:ml-auto">
+              <h3 class="font-syne text-[19px] sm:text-[21px] font-semibold text-white tracking-[-0.012em] leading-snug">
+                Be proactive, build systems and master your craft
+              </h3>
+              <p class="mt-1.5 text-[14px] sm:text-[14.5px] leading-relaxed text-blue-100/90">
+                Never wait for permission or tasks. You will have a buddy and brilliant teammates supporting you, but it is on you to read up, figure things out, build scalable systems, and proactively become the best person in the world at what you do.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- SECTION 3: REMOTE CULTURE & OPPORTUNITIES -->
+    <!-- (Clean, minimal, 3-card layout aligned with founder video) -->
+    <!-- ========================================================================= -->
+    <section id="remote-culture" class="relative isolate w-full px-5 py-20 sm:px-8 lg:px-12 xl:px-32 bg-canvas-cream border-t border-neutral-border">
+      <div class="mx-auto w-full max-w-[1240px]">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col items-start gap-3 max-w-[760px] pb-10 sm:pb-12 blur-fade-in">
+          <p class="text-[13px] font-semibold uppercase tracking-[1.4px] text-brand">
+            03 • Operating Environment &amp; Upside
+          </p>
+          <h2 class="font-syne text-[32px] sm:text-[44px] md:text-[48px] font-semibold leading-[1.18] text-obsidian tracking-[-0.012em]">
+            Remote culture and opportunities.
+          </h2>
+          <p class="text-[16px] sm:text-[17px] leading-relaxed text-neutral-sub">
+            Remote-first freedom paired with high personal accountability and direct company ownership.
+          </p>
+        </div>
+
+        <!-- 3 Clean Minimalist Cards: Slack, Visibility, Equity & SF Sprints -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          <!-- Card 3.1: Slack is our Virtual Office -->
+          <div class="rounded-[28px] bg-white p-7 sm:p-8 shadow-sm transition-all hover:shadow-md blur-fade-in stagger-1">
+            <div class="flex size-12 items-center justify-center rounded-2xl bg-brand-tint text-brand">
+              <svg class="size-6" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.52-2.522v-2.522h2.52zM15.165 17.688a2.527 2.527 0 0 1-2.52-2.523 2.526 2.526 0 0 1 2.52-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/>
+              </svg>
+            </div>
+
+            <h3 class="font-syne mt-5 text-[21px] font-semibold text-obsidian tracking-[-0.012em]">
+              Slack is our virtual office
+            </h3>
+
+            <p class="mt-3 text-[14px] sm:text-[14.5px] leading-relaxed text-neutral-sub">
+              You can work from anywhere, whether in the Slovenian mountains or at home with family. But with great power comes great responsibility: if you do not show up on Slack, it is like you did not show up at the office.
+            </p>
+          </div>
+
+          <!-- Card 3.2: Make Yourself Visible -->
+          <div class="rounded-[28px] bg-white p-7 sm:p-8 shadow-sm transition-all hover:shadow-md blur-fade-in stagger-2">
+            <div class="flex size-12 items-center justify-center rounded-2xl bg-emerald-50 text-accent-green border border-emerald-200/50">
+              <svg class="size-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </div>
+
+            <h3 class="font-syne mt-5 text-[21px] font-semibold text-obsidian tracking-[-0.012em]">
+              Make yourself visible
+            </h3>
+
+            <p class="mt-3 text-[14px] sm:text-[14.5px] leading-relaxed text-neutral-sub">
+              Even if you do great things on your own, if people do not notice, no one will know your impact. Communicate clearly in public squad channels, avoid private DMs as much as possible, and share information across teams.
+            </p>
+          </div>
+
+          <!-- Card 3.3: Equity Options & San Francisco Sprints -->
+          <div class="rounded-[28px] bg-white p-7 sm:p-8 shadow-sm transition-all hover:shadow-md blur-fade-in stagger-3">
+            <div class="flex size-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700 border border-amber-200/50">
+              <svg class="size-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+
+            <h3 class="font-syne mt-5 text-[21px] font-semibold text-obsidian tracking-[-0.012em]">
+              Equity &amp; SF sprints
+            </h3>
+
+            <p class="mt-3 text-[14px] sm:text-[14.5px] leading-relaxed text-neutral-sub">
+              Contributors who provide lasting value earn stock options to own a piece of 8x. You will also have access to 8x team houses in San Francisco for intensive in-person build sprints, and the autonomy to shape your own role.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ========================================================================= -->
+    <!-- CLOSING SECTION: REFINED AS REQUESTED -->
+    <!-- (Arch of icons removed, Portfolio button linked to danilomd.com, strictly NO em dashes) -->
+    <!-- ========================================================================= -->
+    <section id="slack-section" class="relative isolate w-full px-4 py-16 sm:px-8 lg:px-12 bg-white">
+      <div class="mx-auto w-full max-w-[1240px]">
+        
+        <!-- Big Rounded Blue Gradient Banner (Arch of icons removed) -->
+        <div class="relative overflow-hidden rounded-[36px] sm:rounded-[48px] bg-gradient-to-b from-[#0021cc] via-[#001cb5] to-[#001085] px-6 py-20 sm:px-12 sm:py-28 text-white text-center shadow-2xl blur-fade-in">
+          
+          <!-- Subtle lighting radial glow in banner -->
+          <div class="pointer-events-none absolute left-1/2 -top-40 size-[700px] -translate-x-1/2 rounded-full bg-blue-400/20 blur-3xl"></div>
+
+          <div class="relative z-10 mx-auto max-w-[860px]">
+            
+            <!-- Headline matching user request in Syne font (Tuned proportions) -->
+            <h2 class="font-syne text-[30px] sm:text-[42px] md:text-[48px] font-semibold leading-[1.18] text-white tracking-[-0.012em]">
+              This is the part where you'll put the Slack invite and any useful links!
+            </h2>
+
+            <!-- Subtitle matching user request -->
+            <p class="mx-auto mt-5 max-w-[620px] text-[16px] sm:text-[18px] font-normal leading-relaxed text-blue-100">
+              I don't have that yet so it's your turn to hire me to complete this page :)
+            </p>
+
+            <!-- Dual White Pill Buttons: Join Slack Workspace & Link to Danilo's Portfolio -->
+            <div class="mt-9 flex flex-wrap items-center justify-center gap-3.5 sm:gap-4">
+              <button id="slackInviteBtn" type="button" class="flex h-12 items-center justify-center gap-2 rounded-full bg-white px-7 text-[15px] font-semibold text-obsidian shadow-lg transition-all hover:bg-white/90 hover:scale-105 active:scale-95">
+                <span>Join Slack Workspace</span>
+                <span class="text-[17px]">↗</span>
+              </button>
+              
+              <!-- Check out Danilo's portfolio again just to be sure -->
+              <a href="https://danilomd.com" target="_blank" rel="noopener noreferrer" class="flex h-12 items-center justify-center gap-2 rounded-full bg-white px-7 text-[15px] font-semibold text-obsidian shadow-lg transition-all hover:bg-white/90 hover:scale-105 active:scale-95">
+                <span>Check out Danilo's portfolio again just to be sure</span>
+                <span class="text-[17px]">↗</span>
+              </a>
+            </div>
+
+            <!-- Toast notification when clicking the Slack button -->
+            <div id="actionToast" class="mt-6 mx-auto max-w-[480px] hidden rounded-2xl bg-black/70 backdrop-blur-md border border-white/20 p-4 text-[13.5px] text-white transition-all shadow-xl">
+              🔒 Slack invite link is pending Danilo joining the team! Hire Danilo to activate.
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Crisp White Footer Transition Area -->
+        <footer class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-8 border-t border-neutral-border/60 blur-fade-in">
+          
+          <!-- Official 8x Logo on the Left -->
+          <div class="flex items-center gap-3">
+            <img src="8x_logo.svg" alt="8x" class="h-7 w-auto" />
+            <span class="text-[12px] font-semibold uppercase tracking-wider text-neutral-label">
+              Internal Onboarding Hub
+            </span>
+          </div>
+
+          <!-- Very Tiny Danilo Attribution on the Right as Requested -->
+          <div>
+            <p class="text-[11px] tracking-wide text-neutral-label/75 text-center sm:text-right">
+              Made by Danilo, looking forward to working at 8x
+            </p>
+          </div>
+
+        </footer>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Floating Back to Top Button -->
+  <a href="#hero" id="backToTop" class="fixed bottom-6 right-6 z-40 hidden size-10 items-center justify-center rounded-full bg-obsidian text-white shadow-lg transition-transform hover:scale-110 active:scale-95" aria-label="Back to top">
+    <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+  </a>
+
+  <!-- Vimeo Player API for auto-matching aspect ratio -->
+  <script src="https://player.vimeo.com/api/player.js"></script>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Action Toast for Slack invite button
+      const slackInviteBtn = document.getElementById('slackInviteBtn');
+      const actionToast = document.getElementById('actionToast');
+
+      function triggerToast(message) {
+        if (actionToast) {
+          actionToast.innerHTML = message;
+          actionToast.classList.remove('hidden');
+          setTimeout(() => {
+            actionToast.classList.add('hidden');
+          }, 6000);
+        }
+      }
+
+      if (slackInviteBtn) {
+        slackInviteBtn.addEventListener('click', () => {
+          triggerToast('🔒 Slack invite link is pending Danilo joining the team! Hire Danilo to activate.');
+        });
+      }
+
+      // Scroll-triggered Blur Fade-In Observer
+      const blurElements = document.querySelectorAll('.blur-fade-in');
+      if ('IntersectionObserver' in window) {
+        const blurObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          rootMargin: '0px 0px 60px 0px',
+          threshold: 0.02
+        });
+
+        blurElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight + 40) {
+            el.classList.add('is-visible');
+          } else {
+            blurObserver.observe(el);
+          }
+        });
+      } else {
+        blurElements.forEach(el => el.classList.add('is-visible'));
+      }
+
+      // Auto-adapt hero video player aspect ratio to eliminate letterboxing
+      const heroVideoContainer = document.getElementById('heroVideoContainer');
+      const heroVimeoIframe = document.getElementById('heroVimeoIframe');
+      if (heroVideoContainer && heroVimeoIframe && window.Vimeo) {
+        try {
+          const vimeoPlayer = new Vimeo.Player(heroVimeoIframe);
+          vimeoPlayer.on('loaded', () => {
+            Promise.all([vimeoPlayer.getVideoWidth(), vimeoPlayer.getVideoHeight()]).then(([w, h]) => {
+              if (w && h) {
+                heroVideoContainer.style.aspectRatio = `${w} / ${h}`;
+              }
+            }).catch(() => {});
+          });
+        } catch (e) {}
+      }
+
+      // Back to top scroll listener
+      const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          backToTop.classList.remove('hidden');
+          backToTop.classList.add('flex');
+        } else {
+          backToTop.classList.add('hidden');
+          backToTop.classList.remove('flex');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
