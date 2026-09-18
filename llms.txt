@@ -24,8 +24,10 @@ Danilo Damiani is a professional Video Editor and Motion Designer with over 5 ye
   - *Context*: Above-the-fold hero animation for on-demand expert consultation platform.
   - *Creative Execution*: Recreated every single interface element from scratch and animated smoothly in After Effects to demonstrate the frictionless user flow.
   - *Category*: Website Animation from Scratch.
-- **Real Estate Premium Vlog**: Cinematic light editing, visual polish, and luxury pacing.
+- **AI Coding Tutorial**: Talking head + motion graphics editing for technical content.
 - **Premium Faceless Editing**: High-retention narrative structuring, graphics, and visual hooks.
+- **Cooking Show**: Podcast editing with multi-cam pacing and engaging cuts.
+- **Real Estate Premium Vlog**: Editorial light editing, visual polish, and luxury pacing.
 - **Documentary & Narrative Edit**: Story-driven documentary editing with dynamic archival and motion assets.
 
 ## Technical Skills & Tooling

@@ -950,8 +950,11 @@ section {
 }
 
 .portfolio-item:hover .portfolio-poster {
-    opacity: 0;
     transform: scale(1.05);
+}
+
+.portfolio-item:has(.portfolio-video):hover .portfolio-poster {
+    opacity: 0;
 }
 
 .portfolio-item:hover .portfolio-video {

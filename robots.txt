@@ -2,6 +2,7 @@
 # https://danilomd.com/
 
 User-agent: *
+Content-Signal: ai-train=no, search=yes, ai-input=yes
 Allow: /
 Disallow: /snake/
 

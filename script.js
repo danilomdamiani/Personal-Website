@@ -204,6 +204,7 @@ function initPortfolioHover() {
     portfolioItems.forEach(item => {
         const video = item.querySelector('.portfolio-video');
         const wistiaId = item.dataset.wistia;
+        const youtubeId = item.dataset.youtube;
 
         item.addEventListener('mouseenter', () => {
             if (video && video.readyState >= 2) {
@@ -221,6 +222,8 @@ function initPortfolioHover() {
         item.addEventListener('click', () => {
             if (wistiaId) {
                 openWistiaModal(wistiaId);
+            } else if (youtubeId) {
+                openYouTubeModal(youtubeId);
             }
         });
     });
@@ -236,6 +239,7 @@ function initVideoEditingHover() {
     videoEditingItems.forEach(item => {
         const video = item.querySelector('.video-editing-video');
         const wistiaId = item.dataset.wistia;
+        const youtubeId = item.dataset.youtube;
         const isVertical = item.dataset.orientation === 'vertical';
 
         item.addEventListener('mouseenter', () => {
@@ -254,6 +258,8 @@ function initVideoEditingHover() {
         item.addEventListener('click', () => {
             if (wistiaId) {
                 openWistiaModal(wistiaId, isVertical);
+            } else if (youtubeId) {
+                openYouTubeModal(youtubeId, isVertical);
             }
         });
     });
@@ -281,8 +287,11 @@ function initVideoModals() {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
             const wistiaId = btn.dataset.wistia;
+            const youtubeId = btn.dataset.youtube;
             if (wistiaId) {
                 openWistiaModal(wistiaId);
+            } else if (youtubeId) {
+                openYouTubeModal(youtubeId);
             }
         });
     });
@@ -375,6 +384,42 @@ function openWistiaModal(mediaId, isVertical = false) {
             }
         });
     });
+}
+
+function openYouTubeModal(videoId, isVertical = false) {
+    const modal = document.getElementById('videoModal');
+    const container = document.getElementById('wistiaContainer');
+    
+    if (!modal || !container) return;
+    
+    // Clear previous content and reset classes
+    container.innerHTML = '';
+    container.className = 'modal-video-container' + (isVertical ? ' vertical' : '');
+    
+    // Adjust padding based on orientation (16:9 for horizontal, 9:16 for vertical)
+    const padding = isVertical ? '177.78%' : '56.25%';
+    const originParam = window.location.protocol.startsWith('http')
+        ? `&origin=${encodeURIComponent(window.location.origin)}`
+        : '';
+    
+    // Create responsive YouTube embed iframe with autoplay
+    const youtubeHTML = `
+        <div class="video-responsive-padding" style="padding:${padding} 0 0 0;position:relative;width:100%;border-radius:12px;overflow:hidden;background:#000;">
+            <iframe
+                src="https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0&playsinline=1&enablejsapi=1${originParam}"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+                style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;">
+            </iframe>
+        </div>
+    `;
+    
+    container.innerHTML = youtubeHTML;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeModal(modal) {

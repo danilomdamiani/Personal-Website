@@ -1,0 +1,20 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Link = '</llms.txt>; rel="describedby", </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="service-doc"'
+    Vary = "Accept"
+
+[[headers]]
+  for = "/.well-known/api-catalog"
+  [headers.values]
+    Content-Type = "application/linkset+json; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+
+[[edge_functions]]
+  path = "/"
+  function = "markdown-negotiation"
+
+[[edge_functions]]
+  path = "/index.html"
+  function = "markdown-negotiation"
+

@@ -9,9 +9,15 @@
     <meta name="author" content="Danilo Damiani">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="theme-color" content="#050505">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://danilomd.com/">
+    
+    <!-- Agent Discovery & Machine-Readable Resources (RFC 8288 & RFC 9727) -->
+    <link rel="describedby" href="/llms.txt">
+    <link rel="api-catalog" href="/.well-known/api-catalog">
+    <link rel="service-doc" href="/llms.txt">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -330,15 +336,13 @@
         
         <div class="portfolio-grid">
             <!-- Project 1 -->
-            <div class="portfolio-item" data-project="l1" data-wistia="7wbxojg6wd">
+            <div class="portfolio-item" data-project="l3" data-youtube="kMk4pvFJ13s">
                 <div class="portfolio-thumbnail">
-                    <img class="portfolio-poster" src="preview/longform-1.webp" alt="Real Estate Premium Vlog" width="640" height="360" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')">
-                    <video class="portfolio-video" loop muted playsinline preload="none" poster="preview/longform-1.webp" data-src="preview/longform-1.webm">
-                    </video>
+                    <img class="portfolio-poster" src="preview/longform-3.jpg" alt="AI Coding Tutorial" width="640" height="360" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')">
                     <div class="portfolio-overlay">
                         <div class="project-meta">
-                            <span class="video-editing-category">CINEMATIC LIGHT EDITING</span>
-                            <h3 class="project-title">Real Estate Premium Vlog</h3>
+                            <span class="video-editing-category">TALKING HEAD + MOTION GRAPHICS</span>
+                            <h3 class="project-title">AI Coding Tutorial</h3>
                         </div>
                         <div class="project-play">
                             <i data-lucide="play-circle"></i>
@@ -357,6 +361,40 @@
                         <div class="project-meta">
                             <span class="video-editing-category">YOUTUBE RETENTION</span>
                             <h3 class="project-title">Premium Faceless Editing</h3>
+                        </div>
+                        <div class="project-play">
+                            <i data-lucide="play-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="portfolio-item" data-project="l4" data-youtube="TMgTNeOPimg">
+                <div class="portfolio-thumbnail">
+                    <img class="portfolio-poster" src="preview/longform-4.jpg" alt="Cooking Show" width="640" height="360" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')">
+                    <div class="portfolio-overlay">
+                        <div class="project-meta">
+                            <span class="video-editing-category">PODCAST EDITING</span>
+                            <h3 class="project-title">Cooking Show</h3>
+                        </div>
+                        <div class="project-play">
+                            <i data-lucide="play-circle"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="portfolio-item" data-project="l1" data-wistia="7wbxojg6wd">
+                <div class="portfolio-thumbnail">
+                    <img class="portfolio-poster" src="preview/longform-1.webp" alt="Real Estate Premium Vlog" width="640" height="360" loading="lazy" decoding="async" onload="this.classList.add('is-loaded')">
+                    <video class="portfolio-video" loop muted playsinline preload="none" poster="preview/longform-1.webp" data-src="preview/longform-1.webm">
+                    </video>
+                    <div class="portfolio-overlay">
+                        <div class="project-meta">
+                            <span class="video-editing-category">EDITORIAL LIGHT EDITING</span>
+                            <h3 class="project-title">Real Estate Premium Vlog</h3>
                         </div>
                         <div class="project-play">
                             <i data-lucide="play-circle"></i>
